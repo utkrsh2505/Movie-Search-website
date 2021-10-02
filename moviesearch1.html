@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #box {
+          
+            height: 150px;
+            text-align: center;
+          padding-top: 50px;
+          background-color: cadetblue;
+       
+        }
+        #name {
+            font-size: 40px;
+            text-align: center;
+        }
+        #btn1 {
+            width: 200px;
+            font-size: 40px;
+            background-color: black;
+            color: white;
+        }
+
+        #dis {
+            margin: auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            width: 900px;
+            
+        }
+        .mBox {
+            height: 400px;
+            width: 250px;
+          
+        }
+        .imgBox {
+            width: 250px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <input type="text" placeholder="write movie name" id="name"/>
+       <button id="btn1"> search</button>
+    </div>
+    <div id="dis">
+
+    </div>
+    <script>
+      
+        function api(){
+         
+            var name = document.getElementById("name").value;
+            if(!name){
+                alert("please write name");
+                return
+            }
+            
+      fetch(`http://www.omdbapi.com/?s=${name}&apikey=fec0d041`)
+        .then(function(response){
+           
+            return response.json()
+        })
+        .then(function(response){
+           console.log(response);
+         display(response.Search);
+           
+            
+   
+        })
+        .catch(function(error){
+
+        })
+    }
+
+    function display(arr){
+   
+  
+        var dis = document.getElementById("dis");
+        dis.textContent="";
+        console.log(arr.length);
+        for(var i=0; i<arr.length; i++){
+        
+            var div = document.createElement("div");
+           
+            div.setAttribute("class","mBox");
+
+            var img = document.createElement("img");
+           img.setAttribute("class", "imgBox");
+         img.src = arr[i].Poster;
+         div.appendChild(img);
+
+            var title = document.createElement("p");
+            title.textContent = `Movie Name :${arr[i].Title}`
+            div.appendChild(title);
+            var year = document.createElement("p");
+            year.textContent = ` Relese Year :${arr[i].Year}`
+            div.appendChild(year);
+            dis.appendChild(div);
+           
+        }
+        
+         
+       
+    }
+    
+
+      window.addEventListener("load",function(){
+          var btn = document.getElementById("btn1");
+       
+          btn.addEventListener("click", api)
+      })
+    </script>
+</body>
+</html>
