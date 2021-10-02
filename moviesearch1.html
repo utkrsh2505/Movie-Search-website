@@ -75,7 +75,7 @@
             return response.json()
         })
         .then(function(response){
-           console.log(response);
+           console.log(response.Search);
          display(response.Search);
            
             
@@ -97,7 +97,7 @@
   
         var dis = document.getElementById("dis");
         dis.textContent="";
-        console.log(arr.length);
+       
         for(var i=0; i<arr.length; i++){
         
             var div = document.createElement("div");
@@ -115,6 +115,11 @@
             var year = document.createElement("p");
             year.textContent = ` Relese Year :${arr[i].Year}`
             div.appendChild(year);
+            if(arr[i].imdbID > 8.5){
+                var imdb = document.createElement("p");
+                imdb.textContent = "Recommended";
+                div.appendChild(imdb);
+            }
             dis.appendChild(div);
            
         }
